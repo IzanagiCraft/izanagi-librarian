@@ -23,6 +23,7 @@ import com.google.inject.Inject;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.proxy.ProxyShutdownEvent;
+import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
 
@@ -39,6 +40,15 @@ import java.util.logging.Logger;
  * @author <a href="https://github.com/sanguine6660">@sanguine6660</a>
  * @since 14.12.2023
  */
+@Plugin(
+        id = "izanagi-librarian",
+        name = "izanagi-librarian",
+        version = "1.0-SNAPSHOT",
+        description = "Includes all public shared libraries of IzanagiCraft projects.",
+        authors = {"sanguine6660"},
+        url = "https://github.com/IzanagiCraft/izanagi-librarian",
+        dependencies = {}
+)
 public class IzanagiLibrarianPlugin {
 
     private ProxyServer server;
