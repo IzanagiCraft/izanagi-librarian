@@ -24,6 +24,7 @@ repositories {
     mavenCentral()
     maven { url = uri("https://plugins.gradle.org/m2/") }
     maven { url = uri("https://jitpack.io") }
+    maven { url = uri("https://artifactory.izanagicraft.tech/repository/maven-snapshots/") }
     mavenLocal()
 }
 
@@ -39,7 +40,7 @@ subprojects {
         maven { url = uri("https://repo.papermc.io/repository/maven-public/") }
         maven { url = uri("https://repo.dmulloy2.net/repository/public/") }
         maven { url = uri("https://repo.extendedclip.com/content/repositories/placeholderapi/") }
-        // TODO: add izanagi maven repo
+        maven { url = uri("https://artifactory.izanagicraft.tech/repository/maven-snapshots/") }
         mavenLocal()
     }
 
@@ -77,6 +78,55 @@ subprojects {
     val javaComponent = components["java"] as AdhocComponentWithVariants
     javaComponent.withVariantsFromConfiguration(configurations["shadowRuntimeElements"]) {
         skip()
+    }
+
+    publishing {
+        (components["java"] as AdhocComponentWithVariants).withVariantsFromConfiguration(configurations["shadowRuntimeElements"]) {
+            skip()
+        }
+
+        publications {
+            create<MavenPublication>(project.name) {
+                from(components["java"])
+
+                pom {
+                    name.set(project.name)
+                    url.set("https://github.com/IzanagiCraft/data-storage")
+                    properties.put("inceptionYear", "2023")
+
+                    licenses {
+                        license {
+                            name.set("General Public License (GPL v3.0)")
+                            url.set("https://www.gnu.org/licenses/gpl-3.0.txt")
+                            distribution.set("repo")
+                        }
+                    }
+
+                    developers {
+                        developer {
+                            id.set("sanguine6660")
+                            name.set("Sanguine")
+                            email.set("sanguine6660@gmail.com")
+                            url.set("https://github.com/sanguine6660")
+                        }
+                    }
+                }
+            }
+        }
+
+        repositories {
+            mavenLocal()
+
+            if (System.getProperty("publishName") != null && System.getProperty("publishPassword") != null) {
+                maven("https://artifactory.izanagicraft.tech/repository/maven-snapshots/") {
+                    this.name = "artifactory-izanagicraft-snapshots"
+                    credentials {
+                        this.password = System.getProperty("publishPassword")
+                        this.username = System.getProperty("publishName")
+                    }
+                }
+            }
+        }
     }
 
     tasks {
