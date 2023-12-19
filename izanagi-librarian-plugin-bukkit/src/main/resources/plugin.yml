@@ -1,5 +1,5 @@
 main: com.izanagicraft.librarian.bukkit.IzanagiLibrarianPlugin
-name: izanagi-librarian
+name: 'izanagi-librarian'
 version: ${version}
 author:
   - sanguine6660
@@ -7,7 +7,7 @@ api-version: 1.20
 description: ${description}
 depend:
   - PlaceholderAPI
-  - ProtocolLib
+#  - ProtocolLib
   - Vault
 website: https://github.com/IzanagiCraft/izanagi-librarian
 load: STARTUP
