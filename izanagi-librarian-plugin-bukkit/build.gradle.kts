@@ -5,3 +5,6 @@ dependencies {
     compileOnly("me.clip:placeholderapi:2.11.5")
     api(project(":izanagi-librarian-bukkit"))
 }
+
+tasks.withType<PublishToMavenRepository>().configureEach { enabled = false }
+tasks.withType<PublishToMavenLocal>().configureEach { enabled = false }

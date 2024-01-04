@@ -28,8 +28,6 @@ repositories {
     mavenLocal()
 }
 
-// TODO: publishing to maven repo
-
 subprojects {
     group = rootProject.group
     version = rootProject.version
@@ -132,8 +130,15 @@ subprojects {
     tasks {
 
         withType<ProcessResources> {
-            filesMatching("*") {
-                expand(project.properties)
+            doLast {
+                filesMatching("*") {
+                    expand(project.properties)
+                    expand() {
+                        filter { key ->
+                            project.findProperty(key)?.toString() ?: "\${${key}}"
+                        }
+                    }
+                }
             }
         }
 
